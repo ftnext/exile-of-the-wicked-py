@@ -44,5 +44,17 @@ class HitPoint:
         corrected = self.MIN if damaged < self.MIN else damaged
         return self.__class__(corrected)
 
+    def recover(self, recovery_amount: int) -> HitPoint:
+        """回復する
+
+        >>> HitPoint(900).recover(70)
+        HitPoint(value=970)
+        >>> HitPoint(900).recover(108)
+        HitPoint(value=999)
+        """
+        recovered = self.value + recovery_amount
+        corrected = self.MAX if recovered > self.MAX else recovered
+        return self.__class__(corrected)
+
     def __repr__(self) -> str:
         return f"HitPoint(value={self.value})"
