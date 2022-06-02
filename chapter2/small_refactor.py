@@ -26,4 +26,24 @@ def version1(
     return damage_amount
 
 
-assert version0(30, 50, 40, 20) == version1(30, 50, 40, 20) == 50
+def version2(
+    player_arm_power,
+    player_weapon_power,
+    enemy_body_defence,
+    enemy_armor_defence,
+):
+    total_player_attack_power = player_arm_power + player_weapon_power
+    total_enemy_defence = enemy_body_defence + enemy_armor_defence
+
+    damage_amount = total_player_attack_power - total_enemy_defence // 2
+    if damage_amount < 0:
+        damage_amount = 0
+    return damage_amount
+
+
+assert (
+    version0(30, 50, 40, 20)
+    == version1(30, 50, 40, 20)
+    == version2(30, 50, 40, 20)
+    == 50
+)
