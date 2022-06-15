@@ -20,3 +20,7 @@ jobs:
           cd chapter2
           python small_refactor.py
           python -m doctest first_step.py -v
+      - name: Run tests on chapter3 codes
+        run: |
+          cd chapter3
+          python -m doctest *.py -v
