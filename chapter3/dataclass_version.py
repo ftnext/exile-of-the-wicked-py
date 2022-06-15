@@ -36,6 +36,9 @@ class Money:
     Traceback (most recent call last):
       ...
     TypeError: unsupported operand type(s) for +: 'Money' and 'int'
+
+    >>> Money(100) == Money(100)
+    True
     """
 
     amount: Final[int]
