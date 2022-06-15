@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from typing import Final
 
@@ -22,6 +24,9 @@ class Money:
     Traceback (most recent call last):
       ...
     dataclasses.FrozenInstanceError: cannot assign to field 'amount'
+
+    >>> Money(100) + Money(200)
+    Money(amount=300)
     """
 
     amount: Final[int]
@@ -29,3 +34,7 @@ class Money:
     def __post_init__(self):
         if self.amount < 0:
             raise ValueError("金額が0以上でありません。")
+
+    def __add__(self, other: Money) -> Money:
+        added = self.amount + other.amount
+        return self.__class__(added)
