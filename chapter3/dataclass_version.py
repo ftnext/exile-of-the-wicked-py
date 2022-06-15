@@ -27,6 +27,10 @@ class Money:
 
     >>> Money(100) + Money(200)
     Money(amount=300)
+    >>> Money(100) + 200
+    Traceback (most recent call last):
+      ...
+    TypeError: unsupported operand type(s) for +: 'Money' and 'int'
     """
 
     amount: Final[int]
@@ -36,5 +40,7 @@ class Money:
             raise ValueError("金額が0以上でありません。")
 
     def __add__(self, other: Money) -> Money:
+        if not isinstance(other, Money):
+            return NotImplemented
         added = self.amount + other.amount
         return self.__class__(added)
