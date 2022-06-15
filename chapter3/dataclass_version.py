@@ -24,6 +24,11 @@ class Money:
     Traceback (most recent call last):
       ...
     dataclasses.FrozenInstanceError: cannot assign to field 'amount'
+    >>> # @dataclass に slots=True を指定しなくても変更できない
+    >>> money.spam = 42
+    Traceback (most recent call last):
+      ...
+    dataclasses.FrozenInstanceError: cannot assign to field 'spam'
 
     >>> Money(100) + Money(200)
     Money(amount=300)
