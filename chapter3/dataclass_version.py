@@ -36,6 +36,10 @@ class Money:
     Traceback (most recent call last):
       ...
     TypeError: unsupported operand type(s) for +: 'Money' and 'int'
+    >>> Money(100, "¥") + Money(200, "$")
+    Traceback (most recent call last):
+      ...
+    ValueError: 通貨単位が違います。
 
     >>> Money(100, "¥") == Money(100, "¥")
     True
@@ -53,5 +57,7 @@ class Money:
     def __add__(self, other: Money) -> Money:
         if not isinstance(other, Money):
             return NotImplemented
+        if self.currency != other.currency:
+            raise ValueError("通貨単位が違います。")
         added = self.amount + other.amount
         return self.__class__(added, self.currency)
