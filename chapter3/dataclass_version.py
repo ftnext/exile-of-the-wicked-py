@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Final
 
 
 @dataclass(frozen=True)
@@ -47,7 +46,8 @@ class Money:
     False
     """
 
-    amount: Final[int]
+    # Final[int]は error: Final name must be initialized with a value
+    amount: int
     currency: str
 
     def __post_init__(self):
