@@ -7,15 +7,15 @@ from typing import Final
 @dataclass(frozen=True)
 class Money:
     """
-    >>> Money(100)
-    Money(amount=100)
+    >>> Money(100, "¥")
+    Money(amount=100, currency='¥')
 
-    >>> Money(-200)
+    >>> Money(-200, "¥")
     Traceback (most recent call last):
       ...
     ValueError: 金額が0以上でありません。
 
-    >>> money = Money(1)
+    >>> money = Money(1, "¥")
     >>> money.amount = 10000
     Traceback (most recent call last):
       ...
@@ -30,18 +30,19 @@ class Money:
       ...
     dataclasses.FrozenInstanceError: cannot assign to field 'spam'
 
-    >>> Money(100) + Money(200)
-    Money(amount=300)
-    >>> Money(100) + 200
+    >>> Money(100, "¥") + Money(200, "¥")
+    Money(amount=300, currency='¥')
+    >>> Money(100, "¥") + 200
     Traceback (most recent call last):
       ...
     TypeError: unsupported operand type(s) for +: 'Money' and 'int'
 
-    >>> Money(100) == Money(100)
+    >>> Money(100, "¥") == Money(100, "¥")
     True
     """
 
     amount: Final[int]
+    currency: str
 
     def __post_init__(self):
         if self.amount < 0:
@@ -51,4 +52,4 @@ class Money:
         if not isinstance(other, Money):
             return NotImplemented
         added = self.amount + other.amount
-        return self.__class__(added)
+        return self.__class__(added, self.currency)
