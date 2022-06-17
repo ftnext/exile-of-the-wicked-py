@@ -39,6 +39,8 @@ class Money:
 
     >>> Money(100, "¥") == Money(100, "¥")
     True
+    >>> Money(100, "¥") == Money(100, "$")
+    False
     """
 
     amount: Final[int]
