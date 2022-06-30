@@ -22,9 +22,15 @@ class Magic:
     Magic(name='ファイア', cost_magic_point=2, attack_power=25, cost_technical_point=0)
     >>> Magic(MagicType.SHIDEN, member)
     Magic(name='紫電', cost_magic_point=7, attack_power=80, cost_technical_point=5)
+    >>> Magic(None, member)
+    Traceback (most recent call last):
+      ...
+    ValueError: MagicTypeを指定してください
     """
 
     def __init__(self, magic_type: MagicType, member: Member) -> None:
+        if not isinstance(magic_type, MagicType):
+            raise ValueError("MagicTypeを指定してください")
         match magic_type:
             case MagicType.FIRE:
                 self.name = "ファイア"
