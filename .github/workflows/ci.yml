@@ -24,3 +24,7 @@ jobs:
         run: |
           cd chapter3
           python -m doctest *.py -v
+      - name: Run tests on chapter6 codes
+        run: |
+          cd chapter6
+          python -m doctest one_place_fork.py -v
