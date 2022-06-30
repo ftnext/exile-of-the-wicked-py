@@ -21,10 +21,12 @@ class Magic:
     """
 
     def __init__(self, magic_type: MagicType, member: Member) -> None:
-        self.name = "ファイア"
-        self.cost_magic_point = 2
-        self.attack_power = 20 + int(member.level * 0.5)
-        self.cost_technical_point = 0
+        match magic_type:
+            case MagicType.FIRE:
+                self.name = "ファイア"
+                self.cost_magic_point = 2
+                self.attack_power = 20 + int(member.level * 0.5)
+                self.cost_technical_point = 0
 
     def __repr__(self) -> str:
         return (
