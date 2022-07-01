@@ -20,6 +20,11 @@ class AttackPower:
     value: int
 
 
+@dataclass(frozen=True)
+class TechnicalPoint:
+    value: int
+
+
 class Magic(ABC):
     @abstractmethod
     def name(self) -> str:
@@ -34,7 +39,7 @@ class Magic(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def cost_technical_point(self) -> int:
+    def cost_technical_point(self) -> TechnicalPoint:
         raise NotImplementedError
 
 
@@ -50,7 +55,7 @@ class Fire(Magic):
     >>> fire.attack_power()
     AttackPower(value=25)
     >>> fire.cost_technical_point()
-    0
+    TechnicalPoint(value=0)
     """
 
     def __init__(self, member: Member) -> None:
@@ -66,8 +71,8 @@ class Fire(Magic):
         value = 20 + int(self.member.level * 0.5)
         return AttackPower(value)
 
-    def cost_technical_point(self) -> int:
-        return 0
+    def cost_technical_point(self) -> TechnicalPoint:
+        return TechnicalPoint(0)
 
 
 class Shiden(Magic):
@@ -82,7 +87,7 @@ class Shiden(Magic):
     >>> shiden.attack_power()
     AttackPower(value=80)
     >>> shiden.cost_technical_point()
-    5
+    TechnicalPoint(value=5)
     """
 
     def __init__(self, member: Member) -> None:
@@ -99,8 +104,8 @@ class Shiden(Magic):
         value = 50 + int(self.member.agility * 1.5)
         return AttackPower(value)
 
-    def cost_technical_point(self) -> int:
-        return 5
+    def cost_technical_point(self) -> TechnicalPoint:
+        return TechnicalPoint(5)
 
 
 class HellFire(Magic):
@@ -115,7 +120,7 @@ class HellFire(Magic):
     >>> hell_fire.attack_power()
     AttackPower(value=220)
     >>> hell_fire.cost_technical_point()
-    24
+    TechnicalPoint(value=24)
     """
 
     def __init__(self, member: Member) -> None:
@@ -133,5 +138,6 @@ class HellFire(Magic):
         )
         return AttackPower(value)
 
-    def cost_technical_point(self) -> int:
-        return 20 + int(self.member.level * 0.4)
+    def cost_technical_point(self) -> TechnicalPoint:
+        value = 20 + int(self.member.level * 0.4)
+        return TechnicalPoint(value)
