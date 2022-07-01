@@ -95,19 +95,29 @@ class HellFire(Magic):
     >>> level, agility, magic_attack, vitality = 10, 20, 13, 7
     >>> member = Member(level, agility, magic_attack, vitality)
     >>> hell_fire = HellFire(member)
+    >>> hell_fire.name()
+    '地獄の業火'
+    >>> hell_fire.cost_magic_point()
+    16
+    >>> hell_fire.attack_power()
+    220
+    >>> hell_fire.cost_technical_point()
+    24
     """
 
     def __init__(self, member: Member) -> None:
         self.member = member
 
     def name(self) -> str:
-        raise NotImplementedError
+        return "地獄の業火"
 
     def cost_magic_point(self) -> int:
-        raise NotImplementedError
+        return 16
 
     def attack_power(self) -> int:
-        raise NotImplementedError
+        return 200 + int(
+            self.member.magic_attack * 0.5 + self.member.vitality * 2
+        )
 
     def cost_technical_point(self) -> int:
-        raise NotImplementedError
+        return 20 + int(self.member.level * 0.4)
