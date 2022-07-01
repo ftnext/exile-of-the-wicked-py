@@ -15,6 +15,11 @@ class MagicPoint:
     value: int
 
 
+@dataclass(frozen=True)
+class AttackPower:
+    value: int
+
+
 class Magic(ABC):
     @abstractmethod
     def name(self) -> str:
@@ -25,7 +30,7 @@ class Magic(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def attack_power(self) -> int:
+    def attack_power(self) -> AttackPower:
         raise NotImplementedError
 
     @abstractmethod
@@ -43,7 +48,7 @@ class Fire(Magic):
     >>> fire.cost_magic_point()
     MagicPoint(value=2)
     >>> fire.attack_power()
-    25
+    AttackPower(value=25)
     >>> fire.cost_technical_point()
     0
     """
@@ -57,8 +62,9 @@ class Fire(Magic):
     def cost_magic_point(self) -> MagicPoint:
         return MagicPoint(2)
 
-    def attack_power(self) -> int:
-        return 20 + int(self.member.level * 0.5)
+    def attack_power(self) -> AttackPower:
+        value = 20 + int(self.member.level * 0.5)
+        return AttackPower(value)
 
     def cost_technical_point(self) -> int:
         return 0
@@ -74,7 +80,7 @@ class Shiden(Magic):
     >>> shiden.cost_magic_point()
     MagicPoint(value=7)
     >>> shiden.attack_power()
-    80
+    AttackPower(value=80)
     >>> shiden.cost_technical_point()
     5
     """
@@ -89,8 +95,9 @@ class Shiden(Magic):
         value = 5 + int(self.member.level * 0.2)
         return MagicPoint(value)
 
-    def attack_power(self) -> int:
-        return 50 + int(self.member.agility * 1.5)
+    def attack_power(self) -> AttackPower:
+        value = 50 + int(self.member.agility * 1.5)
+        return AttackPower(value)
 
     def cost_technical_point(self) -> int:
         return 5
@@ -106,7 +113,7 @@ class HellFire(Magic):
     >>> hell_fire.cost_magic_point()
     MagicPoint(value=16)
     >>> hell_fire.attack_power()
-    220
+    AttackPower(value=220)
     >>> hell_fire.cost_technical_point()
     24
     """
@@ -120,10 +127,11 @@ class HellFire(Magic):
     def cost_magic_point(self) -> MagicPoint:
         return MagicPoint(16)
 
-    def attack_power(self) -> int:
-        return 200 + int(
+    def attack_power(self) -> AttackPower:
+        value = 200 + int(
             self.member.magic_attack * 0.5 + self.member.vitality * 2
         )
+        return AttackPower(value)
 
     def cost_technical_point(self) -> int:
         return 20 + int(self.member.level * 0.4)
