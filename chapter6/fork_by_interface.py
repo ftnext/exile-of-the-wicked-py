@@ -64,19 +64,27 @@ class Shiden(Magic):
     >>> level, agility, magic_attack, vitality = 10, 20, 13, 7
     >>> member = Member(level, agility, magic_attack, vitality)
     >>> shiden = Shiden(member)
+    >>> shiden.name()
+    '紫電'
+    >>> shiden.cost_magic_point()
+    7
+    >>> shiden.attack_power()
+    80
+    >>> shiden.cost_technical_point()
+    5
     """
 
     def __init__(self, member: Member) -> None:
         self.member = member
 
     def name(self) -> str:
-        raise NotImplementedError
+        return "紫電"
 
     def cost_magic_point(self) -> int:
-        raise NotImplementedError
+        return 5 + int(self.member.level * 0.2)
 
     def attack_power(self) -> int:
-        raise NotImplementedError
+        return 50 + int(self.member.agility * 1.5)
 
     def cost_technical_point(self) -> int:
-        raise NotImplementedError
+        return 5
