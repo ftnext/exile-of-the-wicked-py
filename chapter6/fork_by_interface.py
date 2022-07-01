@@ -10,13 +10,18 @@ class Member:
     vitality: int
 
 
+@dataclass(frozen=True)
+class MagicPoint:
+    value: int
+
+
 class Magic(ABC):
     @abstractmethod
     def name(self) -> str:
         raise NotImplementedError
 
     @abstractmethod
-    def cost_magic_point(self) -> int:
+    def cost_magic_point(self) -> MagicPoint:
         raise NotImplementedError
 
     @abstractmethod
@@ -36,7 +41,7 @@ class Fire(Magic):
     >>> fire.name()
     'ファイア'
     >>> fire.cost_magic_point()
-    2
+    MagicPoint(value=2)
     >>> fire.attack_power()
     25
     >>> fire.cost_technical_point()
@@ -49,8 +54,8 @@ class Fire(Magic):
     def name(self) -> str:
         return "ファイア"
 
-    def cost_magic_point(self) -> int:
-        return 2
+    def cost_magic_point(self) -> MagicPoint:
+        return MagicPoint(2)
 
     def attack_power(self) -> int:
         return 20 + int(self.member.level * 0.5)
@@ -67,7 +72,7 @@ class Shiden(Magic):
     >>> shiden.name()
     '紫電'
     >>> shiden.cost_magic_point()
-    7
+    MagicPoint(value=7)
     >>> shiden.attack_power()
     80
     >>> shiden.cost_technical_point()
@@ -80,8 +85,9 @@ class Shiden(Magic):
     def name(self) -> str:
         return "紫電"
 
-    def cost_magic_point(self) -> int:
-        return 5 + int(self.member.level * 0.2)
+    def cost_magic_point(self) -> MagicPoint:
+        value = 5 + int(self.member.level * 0.2)
+        return MagicPoint(value)
 
     def attack_power(self) -> int:
         return 50 + int(self.member.agility * 1.5)
@@ -98,7 +104,7 @@ class HellFire(Magic):
     >>> hell_fire.name()
     '地獄の業火'
     >>> hell_fire.cost_magic_point()
-    16
+    MagicPoint(value=16)
     >>> hell_fire.attack_power()
     220
     >>> hell_fire.cost_technical_point()
@@ -111,8 +117,8 @@ class HellFire(Magic):
     def name(self) -> str:
         return "地獄の業火"
 
-    def cost_magic_point(self) -> int:
-        return 16
+    def cost_magic_point(self) -> MagicPoint:
+        return MagicPoint(16)
 
     def attack_power(self) -> int:
         return 200 + int(
