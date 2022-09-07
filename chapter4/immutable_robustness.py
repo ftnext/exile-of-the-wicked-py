@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import time
 from dataclasses import dataclass
+from threading import Thread
 from typing import ClassVar
 
 
@@ -27,3 +29,37 @@ class AttackPower:
     def disable(self):
         """無力化する"""
         return self.__class__(self.MIN)
+
+
+# スレッド間で使い回しても問題なし
+def reinforce_worker(attack_power: AttackPower) -> None:
+    print("reinforce_worker: start")
+    print(f"reinforce_worker: {attack_power.value=}")
+    print("reinforce_worker: REINFORCE!!")
+    attack_power.reinforce(AttackPower(15))
+    print(f"reinforce_worker: {attack_power.value=}")
+    time.sleep(2)
+    print("reinforce_worker: end")
+
+
+def disable_worker(attack_power: AttackPower) -> None:
+    print("disable_worker: start")
+    time.sleep(1)
+    print(f"disable_worker: {attack_power.value=}")
+    print("disable_worker: DISABLE!!")
+    attack_power.disable()
+    print(f"disable_worker: {attack_power.value=}")
+    print("disable_worker: end")
+
+
+attack_power = AttackPower(20)
+
+reinforce_thread = Thread(target=reinforce_worker, args=(attack_power,))
+disable_thread = Thread(target=disable_worker, args=(attack_power,))
+
+reinforce_thread.start()
+disable_thread.start()
+reinforce_thread.join()
+disable_thread.join()
+
+assert attack_power.value == 20
