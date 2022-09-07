@@ -17,7 +17,7 @@ class AttackPower:
         """攻撃力を強化する"""
         self.value += increment
 
-    def disable(self):
+    def disable(self) -> None:
         """無力化する"""
         self.value = self.MIN
 
