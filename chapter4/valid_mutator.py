@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from enum import Enum, auto
 from typing import ClassVar, Final
 
 
@@ -31,3 +32,23 @@ class HitPoint:
 
     def is_zero(self) -> bool:
         return self.amount == self.MIN
+
+
+class StateType(Enum):
+    dead = auto()
+
+
+class States:
+    def add(self, state_type: StateType) -> None:
+        ...
+
+
+@dataclass
+class Member:
+    hit_point: HitPoint
+    states: States
+
+    def damage(self, damage_amount: int) -> None:
+        self.hit_point.damage(damage_amount)
+        if self.hit_point.is_zero():
+            self.states.add(StateType.dead)
