@@ -22,11 +22,11 @@ class AttackPower:
         if self.value < self.MIN:
             raise ValueError(f"{self.MIN}以上を指定してください")
 
-    def reinforce(self, increment: AttackPower):
+    def reinforce(self, increment: AttackPower) -> AttackPower:
         """攻撃力を強化する"""
         return self.__class__(self.value + increment.value)
 
-    def disable(self):
+    def disable(self) -> AttackPower:
         """無力化する"""
         return self.__class__(self.MIN)
 
@@ -35,7 +35,7 @@ class AttackPower:
 class Weapon:
     attack_power: AttackPower
 
-    def reinforce(self, increment: AttackPower):
+    def reinforce(self, increment: AttackPower) -> Weapon:
         """武器を強化する"""
         reinforced: Final[AttackPower] = attack_power.reinforce(increment)
         return self.__class__(reinforced)
@@ -59,7 +59,7 @@ def reinforce_worker(attack_power: AttackPower) -> None:
     print("reinforce_worker: start")
     print(f"reinforce_worker: {attack_power.value=}")
     print("reinforce_worker: REINFORCE!!")
-    attack_power.reinforce(AttackPower(15))
+    _ = attack_power.reinforce(AttackPower(15))
     print(f"reinforce_worker: {attack_power.value=}")
     time.sleep(2)
     print("reinforce_worker: end")
@@ -70,7 +70,7 @@ def disable_worker(attack_power: AttackPower) -> None:
     time.sleep(1)
     print(f"disable_worker: {attack_power.value=}")
     print("disable_worker: DISABLE!!")
-    attack_power.disable()
+    _ = attack_power.disable()
     print(f"disable_worker: {attack_power.value=}")
     print("disable_worker: end")
 
@@ -86,3 +86,16 @@ reinforce_thread.join()
 disable_thread.join()
 
 assert attack_power2.value == 20
+
+"""
+reinforce_worker: start
+reinforce_worker: attack_power.value=20
+reinforce_worker: REINFORCE!!
+reinforce_worker: attack_power.value=20
+disable_worker: start
+disable_worker: attack_power.value=20
+disable_worker: DISABLE!!
+disable_worker: attack_power.value=20
+disable_worker: end
+reinforce_worker: end
+"""
