@@ -1,0 +1,36 @@
+name: Continuous integration (type check)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+      - name: Install dependencies
+        run: |
+          python -m pip install mypy
+      - name: Type check on chapter2 codes
+        run: |
+          cd chapter2
+          mypy first_step.py
+      - name: Type check on chapter3 codes
+        run: |
+          cd chapter3
+          mypy dataclass_version.py
+      - name: Type check on chapter4 codes
+        run: |
+          cd chapter4
+          mypy *.py
+      - name: Type check on chapter6 codes
+        run: |
+          cd chapter6
+          mypy *.py
