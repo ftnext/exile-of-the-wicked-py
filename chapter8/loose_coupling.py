@@ -43,6 +43,27 @@ class RegularDiscountedPrice:
 
 
 @dataclass(frozen=True)
+class RegularDiscountedPriceV2:
+    """イニシャライザにRegularPriceを渡せるバージョン
+
+    >>> RegularDiscountedPriceV2(RegularPrice(470))
+    RegularDiscountedPriceV2(amount=70)
+    >>> RegularDiscountedPriceV2(RegularPrice(350))
+    RegularDiscountedPriceV2(amount=0)
+    """
+
+    MIN_AMOUNT: ClassVar[int] = 0
+    DISCOUNT_AMOUNT: ClassVar[int] = 400
+    amount: int
+
+    def __init__(self, price: RegularPrice) -> None:
+        discounted_amount = price.amount - self.DISCOUNT_AMOUNT
+        if discounted_amount < self.MIN_AMOUNT:
+            discounted_amount = self.MIN_AMOUNT
+        object.__setattr__(self, "amount", discounted_amount)
+
+
+@dataclass(frozen=True)
 class SummerDiscountedPrice:
     """
     >>> SummerDiscountedPrice.from_price(RegularPrice(350))
