@@ -4,6 +4,15 @@ from typing import ClassVar
 
 @dataclass(frozen=True)
 class RegularPrice:
+    """
+    >>> RegularPrice(350)
+    RegularPrice(amount=350)
+    >>> RegularPrice(-1)
+    Traceback (most recent call last):
+      ...
+    ValueError: 価格が0以上でありません
+    """
+
     MIN_AMOUNT: ClassVar[int] = 0
     amount: int
 
@@ -14,6 +23,13 @@ class RegularPrice:
 
 @dataclass(frozen=True)
 class RegularDiscountedPrice:
+    """
+    >>> RegularDiscountedPrice.from_price(RegularPrice(470))
+    RegularDiscountedPrice(amount=70)
+    >>> RegularDiscountedPrice.from_price(RegularPrice(350))
+    RegularDiscountedPrice(amount=0)
+    """
+
     MIN_AMOUNT: ClassVar[int] = 0
     DISCOUNT_AMOUNT: ClassVar[int] = 400
     amount: int
@@ -28,6 +44,13 @@ class RegularDiscountedPrice:
 
 @dataclass(frozen=True)
 class SummerDiscountedPrice:
+    """
+    >>> SummerDiscountedPrice.from_price(RegularPrice(350))
+    SummerDiscountedPrice(amount=50)
+    >>> SummerDiscountedPrice.from_price(RegularPrice(230))
+    SummerDiscountedPrice(amount=0)
+    """
+
     MIN_AMOUNT: ClassVar[int] = 0
     DISCOUNT_AMOUNT: ClassVar[int] = 300
     amount: int
