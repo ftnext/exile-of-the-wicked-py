@@ -3,10 +3,12 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 
 
-@dataclass
+@dataclass(frozen=True)
 class Product:
     """商品クラス"""
 
+    id: int
+    name: str
     price: int
 
 
