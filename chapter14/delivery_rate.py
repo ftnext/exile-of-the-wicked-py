@@ -22,6 +22,11 @@ class ShoppingCart:
         return self.__class__(adding)
 
 
+class DeliveryCharge:
+    def __init__(self, shopping_cart: ShoppingCart) -> None:
+        self.amount = -1
+
+
 class DeliveryManager:
     """配送管理クラス"""
 
