@@ -22,23 +22,27 @@ class ShoppingCart:
         adding.append(product)
         return self.__class__(adding)
 
+    def total_price(self) -> int:
+        """商品の合計金額を返す"""
+        amount = 0
+        for product in self.products:
+            amount += product.price
+        return amount
+
 
 class DeliveryCharge:
     def __init__(self, shopping_cart: ShoppingCart) -> None:
-        self.amount = DeliveryManager.delivery_charge(shopping_cart.products)
+        self.amount = DeliveryManager.delivery_charge(shopping_cart)
 
 
 class DeliveryManager:
     """配送管理クラス"""
 
     @staticmethod
-    def delivery_charge(products: Sequence[Product]) -> int:
+    def delivery_charge(shopping_cart: ShoppingCart) -> int:
         """配送料を返す"""
         charge = 0
-        total_price = 0
-        for product in products:
-            total_price += product.price
-        if total_price < 2000:
+        if shopping_cart.total_price() < 2000:
             charge = 500
         else:
             charge = 0
