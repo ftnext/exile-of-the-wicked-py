@@ -25,13 +25,7 @@ class ShoppingCart:
 
 class DeliveryCharge:
     def __init__(self, shopping_cart: ShoppingCart) -> None:
-        total_price = (
-            shopping_cart.products[0].price + shopping_cart.products[1].price
-        )
-        if total_price < 2000:
-            self.amount = 500
-        else:
-            self.amount = 0
+        self.amount = DeliveryManager.delivery_charge(shopping_cart.products)
 
 
 class DeliveryManager:
