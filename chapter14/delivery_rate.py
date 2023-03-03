@@ -12,6 +12,16 @@ class Product:
     price: int
 
 
+class ShoppingCart:
+    def __init__(self, products: list[Product] | None = None) -> None:
+        self.products: list[Product] = products or []
+
+    def add(self, product: Product) -> "ShoppingCart":
+        adding = list(self.products)
+        adding.append(product)
+        return self.__class__(adding)
+
+
 class DeliveryManager:
     """配送管理クラス"""
 
